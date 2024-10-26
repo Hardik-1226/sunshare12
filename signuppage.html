@@ -1,0 +1,193 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunShare Sign In / Sign Up</title>
+    <style>
+      
+        @keyframes slideFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            animation: slideFadeIn 1.5s ease-in-out forwards;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        
+        .form-container input[type="email"], 
+        .form-container input[type="password"], 
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-container input:focus {
+            border-color: #ffc107; 
+            outline: none;
+        }
+
+        
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #ffa500;
+            transform: scale(1.05);
+        }
+
+        
+        .form-toggle {
+            color: #555;
+            margin-top: 15px;
+        }
+
+        .form-toggle a {
+            color: #ffc107;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-toggle a:hover {
+            text-decoration: underline;
+        }
+
+       
+        .message {
+            display: none;
+            margin-top: 10px;
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .message.success {
+            color: #28a745;
+            background-color: #d4edda;
+        }
+
+        .message.error {
+            color: #dc3545;
+            background-color: #f8d7da;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="form-container" id="form-container">
+       
+        <h2 id="form-title">Sign In</h2>
+        <form id="auth-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" id="auth-button">Sign In</button>
+        </form>
+
+       
+        <p class="form-toggle" id="form-toggle">Don't have an account? <a href="#" id="toggle-link">Sign Up</a></p>
+
+        
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        
+        const formTitle = document.getElementById('form-title');
+        const authButton = document.getElementById('auth-button');
+        const toggleLink = document.getElementById('toggle-link');
+        const formToggle = document.getElementById('form-toggle');
+        const authForm = document.getElementById('auth-form');
+        const message = document.getElementById('message');
+        let isSignUp = false;
+
+        toggleLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (isSignUp) {
+                formTitle.textContent = 'Sign In';
+                authButton.textContent = 'Sign In';
+                formToggle.innerHTML = 'Don\'t have an account? <a href="#" id="toggle-link">Sign Up</a>';
+                isSignUp = false;
+            } else {
+                formTitle.textContent = 'Sign Up';
+                authButton.textContent = 'Sign Up';
+                formToggle.innerHTML = 'Already have an account? <a href="#" id="toggle-link">Sign In</a>';
+                isSignUp = true;
+            }
+            message.style.display = 'none';
+        });
+
+       
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                showMessage('Please fill in all fields', 'error');
+            } else {
+                if (isSignUp) {
+                    showMessage('Account created successfully!', 'success');
+                } else {
+                    showMessage('Sign In successful!', 'success');
+                }
+            }
+        });
+
+      
+        function showMessage(text, type) {
+            message.textContent = text;
+            message.classList.remove('success', 'error');
+            message.classList.add(type);
+            message.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>

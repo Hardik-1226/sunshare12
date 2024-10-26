@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Plate Availability - Virtual Map with Weather</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            background-image: url('background.jpg');
+            background-size: cover;
+            color: #333;
+            text-align: center;
+        }
+        h2 {
+            color: #f5c032;
+            margin-top: 30px;
+            font-size: 2.5rem;
+        }
+        .input-container {
+            margin: 20px auto;
+        }
+        input {
+            padding: 10px;
+            width: 250px;
+            font-size: 1rem;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            margin: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        .location-btn {
+            background-color: #00b7ff;
+            color: white;
+        }
+        .nearby-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .sunny-btn {
+            background-color: #ffcc00;
+            color: white;
+        }
+        #availabilityResult {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        #map {
+            height: 500px;
+            width: 80%;
+            margin: 20px auto;
+            border: 2px solid #333;
+            border-radius: 15px;
+        }
+        #sunInfo {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Check SunShare Availability</h2>
+
+    <div class="input-container">
+        <input type="text" id="pincode" placeholder="Enter Your Pin Code" />
+        <button onclick="checkAvailability()" class="location-btn">Check Availability</button>
+    </div>
+
+    <div>
+        <button onclick="locateUser()" class="location-btn">Your Location</button>
+        <button onclick="showNearbyLocations()" class="nearby-btn">Nearby Locations</button>
+        <button onclick="showSunnyAreas()" class="sunny-btn">Highlight Sunny Areas</button>
+    </div>
+
+    <p id="availabilityResult"></p>
+    <div id="sunInfo"></div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([28.6139, 77.2090], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+        }).addTo(map);
+
+        const availablePinCodes = {
+            "110001": [28.6139, 77.2090],
+            "110002": [28.6271, 77.2155],
+            "110003": [28.5921, 77.2281]
+        };
+
+        const weatherData = {
+            "110001": {weather: "sunny", icon: "☀️"},
+            "110002": {weather: "rainy", icon: "🌧️"},
+            "110003": {weather: "sunny", icon: "☀️"}
+        };
+
+        function checkAvailability() {
+            const pincode = document.getElementById("pincode").value;
+            const resultElement = document.getElementById("availabilityResult");
+
+            if (availablePinCodes[pincode]) {
+                const weather = weatherData[pincode];
+                resultElement.innerHTML = `Solar plates are available in your area! Weather: ${weather.icon} ${weather.weather}`;
+                showLocationOnMap(pincode);
+            } else {
+                resultElement.innerHTML = "Sorry, solar plates are not available in your area.";
+            }
+        }
+
+        function showLocationOnMap(pincode) {
+            const location = availablePinCodes[pincode];
+            if (location) {
+                map.setView(location, 13);
+                L.marker(location).addTo(map)
+                  .bindPopup(`Solar plates available in pincode ${pincode}<br>Weather: ${weatherData[pincode].icon} ${weatherData[pincode].weather}`)
+                  .openPopup();
+            }
+        }
+
+        function locateUser() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const userLocation = [position.coords.latitude, position.coords.longitude];
+                    map.setView(userLocation, 13);
+                    L.marker(userLocation).addTo(map)
+                      .bindPopup('You are here!')
+                      .openPopup();
+                    getSunriseSunset(userLocation);
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showNearbyLocations() {
+            const nearbyLocations = [
+                {name: "Connaught Place", coords: [28.6315, 77.2167], pincode: "110001"},
+                {name: "Lajpat Nagar", coords: [28.5675, 77.2435], pincode: "110002"},
+                {name: "South Extension", coords: [28.5708, 77.2231], pincode: "110003"}
+            ];
+
+            map.setView([28.6139, 77.2090], 12);
+            nearbyLocations.forEach((location) => {
+                const weather = weatherData[location.pincode];
+                L.marker(location.coords).addTo(map)
+                  .bindPopup(`${location.name} (Pincode: ${location.pincode})<br>Weather: ${weather.icon} ${weather.weather}`)
+                  .openPopup();
+            });
+        }
+
+        function showSunnyAreas() {
+            Object.keys(availablePinCodes).forEach((pincode) => {
+                const location = availablePinCodes[pincode];
+                const weather = weatherData[pincode];
+                if (weather.weather === "sunny") {
+                    L.circle(location, {
+                        color: 'yellow',
+                        fillColor: '#ffcc00',
+                        fillOpacity: 0.5,
+                        radius: 1000
+                    }).addTo(map)
+                    .bindPopup(`Sunny area: ${pincode}`);
+                }
+            });
+        }
+
+        function getSunriseSunset([lat, lon]) {
+            const sunInfoElement = document.getElementById("sunInfo");
+            const sunriseTime = "06:30 AM";
+            const sunsetTime = "06:15 PM";
+            sunInfoElement.innerHTML = `Sunrise: ${sunriseTime} | Sunset: ${sunsetTime}`;
+        }
+    </script>
+</body>
+</html>

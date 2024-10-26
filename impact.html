@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunShare Impact</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('impact-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #2b8c48;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .impact-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .impact-card {
+            flex: 1;
+            background-color: #f5f5f5;
+            border-radius: 15px;
+            margin: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2b8c48;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background-color: #e8f5e9;
+        }
+
+        .impact-card h2 {
+            font-size: 24px;
+            color: #1565c0;
+            font-weight: bold;
+            margin-bottom: 15px;
+            animation: slideInLeft 1.5s ease-in-out;
+        }
+
+        .impact-card p {
+            font-size: 16px;
+            color: #666;
+            text-align: left;
+            animation: slideInRight 1.5s ease-in-out;
+        }
+
+        .clouds {
+            position: absolute;
+            top: 0;
+            left: -200px;
+            width: 100%;
+            height: 100px;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .cloud {
+            width: 200px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 40px;
+            animation: moveClouds 20s linear infinite;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .cloud:nth-child(2) {
+            bottom: 60px;
+            left: 30%;
+            width: 300px;
+            height: 80px;
+            animation-duration: 25s;
+        }
+
+        .cloud:nth-child(3) {
+            bottom: 20px;
+            left: 60%;
+            width: 250px;
+            height: 70px;
+            animation-duration: 30s;
+        }
+
+        @keyframes moveClouds {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(150%);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(0); }
+        }
+
+        .circle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            animation: floatCircle 15s infinite;
+            z-index: -1;
+        }
+
+        .circle:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 100px;
+            left: 20%;
+            animation-duration: 20s;
+        }
+
+        .circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 50px;
+            right: 10%;
+            animation-duration: 25s;
+        }
+
+        .circle:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 50px;
+            left: 50%;
+            animation-duration: 18s;
+        }
+
+        @keyframes floatCircle {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Impact of SunShare Project</h1>
+
+        <div class="impact-section">
+            <div class="impact-card">
+                <h2>Environmental Impact</h2>
+                <p>SunShare significantly reduces carbon emissions by shifting community energy consumption to renewable sources. By investing in shared solar projects, we've saved approximately 5,000 tons of CO2 emissions so far, equivalent to planting 50,000 trees.</p>
+            </div>
+
+            <div class="impact-card">
+                <h2>Community Engagement</h2>
+                <p>Our platform has empowered over 10,000 households to invest in solar energy and take control of their energy consumption. The collective effort of these communities is leading to a greener and more sustainable future.</p>
+            </div>
+
+            <div class="impact-card">
+                <h2>Financial Growth</h2>
+                <p>By participating in SunShare, communities have seen an average annual return on investment (ROI) of 12%. Many members have reported monthly energy cost savings of ₹2,000 to ₹5,000, creating long-term financial benefits.</p>
+            </div>
+        </div>
+
+        <div class="impact-section">
+            <div class="impact-card">
+                <h2>Future Sustainability</h2>
+                <p>The future of SunShare is focused on expanding its reach to rural areas and smaller towns, making solar energy accessible to all. Our next goal is to connect 100,000 households by 2026 and establish micro-grids for reliable energy distribution.</p>
+            </div>
+
+            <div class="impact-card">
+                <h2>Social Benefits</h2>
+                <p>In addition to environmental and financial gains, SunShare has fostered a sense of collaboration among community members. People from diverse backgrounds come together with a common goal of reducing their carbon footprint while benefiting financially.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+
+</body>
+</html>

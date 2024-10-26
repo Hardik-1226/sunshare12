@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Object Detection with TensorFlow.js</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        h1 {
+            color: #4a90e2;
+        }
+        .camera-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        video {
+            width: 100%;
+            border-bottom: 2px solid #4a90e2;
+        }
+        #detect-button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+        #detect-button:hover {
+            background-color: #357ab7;
+        }
+        #results {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-align: left;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .result-item {
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-item:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        .result-item:nth-child(even) {
+            background-color: #e9f9f9;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+</head>
+<body>
+
+    <h1>Camera Object Detection</h1>
+    <div class="camera-container">
+        <video id="video" autoplay></video>
+        <button id="detect-button">Detect Objects</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const detectButton = document.getElementById('detect-button');
+        const resultsDiv = document.getElementById('results');
+        let model;
+
+        async function loadModel() {
+            model = await cocoSsd.load();
+            console.log("Model loaded.");
+        }
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((err) => {
+                console.error("Error accessing the camera: ", err);
+                resultsDiv.textContent = "Could not access the camera. Please allow camera access.";
+            });
+
+        detectButton.addEventListener('click', async () => {
+            if (!model) {
+                resultsDiv.textContent = "Model is loading, please wait.";
+                return;
+            }
+
+            const predictions = await model.detect(video);
+            displayResults(predictions);
+        });
+
+        function displayResults(predictions) {
+            resultsDiv.innerHTML = '';
+            if (predictions.length === 0) {
+                resultsDiv.textContent = 'No objects detected.';
+                return;
+            }
+
+            predictions.forEach(prediction => {
+                const result = document.createElement('div');
+                result.className = 'result-item';
+                result.textContent = `Detected: ${prediction.class} with confidence: ${(prediction.score * 100).toFixed(2)}%`;
+                resultsDiv.appendChild(result);
+            });
+        }
+
+        window.onload = loadModel;
+    </script>
+
+</body>
+</html>
