@@ -1,0 +1,296 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunShare Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('solar.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            padding-top: 50px;
+        }
+
+        .project-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: rgb(0, 255, 76);
+            margin-bottom: 30px;
+        }
+
+        
+        .project-card {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-info {
+            flex: 2;
+        }
+
+        .project-info h2 {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .project-info p {
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .project-graph {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .graph-placeholder {
+            width: 100%;
+            height: 100px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 100px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .engagement {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        .engagement p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
+        .star-rating span {
+            font-size: 20px;
+            color: gold;
+            margin-right: 5px;
+        }
+
+       
+        .invest-button, .info-button {
+            padding: 10px 20px;
+            background-color: #00E676;
+            color: #fff;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 16px;
+            display: inline-block;
+            margin-top: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .invest-button:hover, .info-button:hover {
+            background-color: #00C853;
+        }
+
+       
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            margin-bottom: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+        }
+
+       
+        .scrollable {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    
+    <div class="project-container">
+        <h1>Community Solar Projects</h1>
+
+        <div class="scrollable">
+
+           
+            <div class="project-card">
+                <div class="project-info">
+                    <h2>Project Solar Shine</h2>
+                    <p>Location: Bangalore | Investment: ₹50,00,000 | Status: Active</p>
+                    <div class="star-rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                    <a href="#" class="invest-button" data-project="1">Invest Now</a>
+                    <a href="#" class="info-button" data-project="1">Info</a>
+                </div>
+                <div class="project-graph">
+                    <div class="graph-placeholder">Growth Graph</div>
+                </div>
+                <div class="engagement">
+                    <p>Participants: 150</p>
+                    <p>Monthly Profit: ₹30,000</p>
+                </div>
+            </div>
+
+          
+            <div class="project-card">
+                <div class="project-info">
+                    <h2>Sun Power Initiative</h2>
+                    <p>Location: Delhi | Investment: ₹1,00,00,000 | Status: Active</p>
+                    <div class="star-rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <a href="#" class="invest-button" data-project="2">Invest Now</a>
+                    <a href="#" class="info-button" data-project="2">Info</a>
+                </div>
+                <div class="project-graph">
+                    <div class="graph-placeholder">Profit/Loss Graph</div>
+                </div>
+                <div class="engagement">
+                    <p>Participants: 200</p>
+                    <p>Monthly Profit: ₹50,000</p>
+                </div>
+            </div>
+
+          
+            <div class="project-card">
+                <div class="project-info">
+                    <h2>Solar Bright Future</h2>
+                    <p>Location: Mumbai | Investment: ₹75,00,000 | Status: Active</p>
+                    <div class="star-rating">
+                        <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+                    </div>
+                    <a href="#" class="invest-button" data-project="3">Invest Now</a>
+                    <a href="#" class="info-button" data-project="3">Info</a>
+                </div>
+                <div class="project-graph">
+                    <div class="graph-placeholder">Growth Graph</div>
+                </div>
+                <div class="engagement">
+                    <p>Participants: 175</p>
+                    <p>Monthly Profit: ₹35,000</p>
+                </div>
+            </div>
+
+       
+        </div>
+    </div>
+
+   
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>Project Info</h2>
+            <p id="projectDetails">Details about the selected project will appear here.</p>
+        </div>
+    </div>
+
+    <script>
+       
+        const infoButtons = document.querySelectorAll('.info-button');
+        const modal = document.getElementById('infoModal');
+        const modalContent = document.getElementById('projectDetails');
+        const closeModal = document.getElementById('closeModal');
+
+        infoButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const projectId = button.getAttribute('data-project');
+               
+                modalContent.innerHTML = `Info for Project ${projectId}: Solar energy project focused on community investment. Location and more details go here.`;
+                modal.style.display = 'flex';
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+       
+        const investButtons = document.querySelectorAll('.invest-button');
+        investButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Thank you for investing in this project!');
+            });
+        });
+    </script>
+
+</body>
+</html>

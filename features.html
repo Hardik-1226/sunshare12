@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Solar Sharing Platform - Features</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f6d365, #fda085);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .feature-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+        .feature-card h3 {
+            color: #2c3e50;
+        }
+        .feature-card p {
+            color: #666;
+        }
+        .feature-card button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            background: linear-gradient(45deg, #ff6a95, #ffca61);
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .feature-card button:hover {
+            background: linear-gradient(45deg, #ffca61, #ff6a95);
+        }
+        .modal, .overlay {
+            display: none;
+        }
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            z-index: 1000;
+            animation: slideUp 0.5s ease;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="feature-card" onclick="showModal('roofScannerModal')">
+            <h3>Roof Scanner</h3>
+            <p>Use your camera to scan your roof for optimal solar panel placement.</p>
+        </div>
+        <div class="feature-card" onclick="showModal('roiCalculatorModal')">
+            <h3>ROI Calculator</h3>
+            <p>Calculate your return on investment for solar panel installation.</p>
+        </div>
+        <div class="feature-card" onclick="showModal('weatherForecastModal')">
+            <h3>Weather Forecasting</h3>
+            <p>View weather patterns to assess solar energy potential.</p>
+        </div>
+        <div class="feature-card" onclick="showModal('microLoanModal')">
+            <h3>Micro Loan</h3>
+            <p>Get flexible loans to fund your solar project investment.</p>
+        </div>
+        <div class="feature-card" onclick="showModal('savingsForecastModal')">
+            <h3>Savings Forecast</h3>
+            <p>Estimate your energy savings with solar power.</p>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay" onclick="closeAllModals()"></div>
+
+    <div id="roofScannerModal" class="modal">
+        <div class="modal-header">
+            <h3>Roof Scanner</h3>
+            <button onclick="closeModal('roofScannerModal')">&times;</button>
+        </div>
+        <video id="cameraStream" width="100%" autoplay></video>
+        <button onclick="takeSnapshot()">Take Snapshot</button>
+        <canvas id="snapshotCanvas" style="display:none;"></canvas>
+    </div>
+
+    <div id="roiCalculatorModal" class="modal">
+        <div class="modal-header">
+            <h3>ROI Calculator</h3>
+            <button onclick="closeModal('roiCalculatorModal')">&times;</button>
+        </div>
+        <input type="number" id="investment" placeholder="Investment Amount">
+        <input type="number" id="savings" placeholder="Annual Savings">
+        <input type="number" id="years" placeholder="Years">
+        <button onclick="calculateROI()">Calculate ROI</button>
+        <p id="roi-result"></p>
+    </div>
+
+    <div id="weatherForecastModal" class="modal">
+        <div class="modal-header">
+            <h3>Weather Forecasting</h3>
+            <button onclick="closeModal('weatherForecastModal')">&times;</button>
+        </div>
+        <div id="weather-map" style="height: 300px; width: 100%;"></div>
+        <p id="weather-info"></p>
+    </div>
+
+    <div id="microLoanModal" class="modal">
+        <div class="modal-header">
+            <h3>Micro Loan Calculator</h3>
+            <button onclick="closeModal('microLoanModal')">&times;</button>
+        </div>
+        <input type="number" id="loanAmount" placeholder="Loan Amount">
+        <input type="number" id="interestRate" placeholder="Interest Rate (%)">
+        <input type="number" id="loanTerm" placeholder="Loan Term (Years)">
+        <button onclick="calculateLoan()">Calculate Loan</button>
+        <p id="loan-result"></p>
+    </div>
+
+    <div id="savingsForecastModal" class="modal">
+        <div class="modal-header">
+            <h3>Savings Forecast</h3>
+            <button onclick="closeModal('savingsForecastModal')">&times;</button>
+        </div>
+        <button onclick="generateForecast()">Generate Savings Forecast</button>
+        <p id="savings-forecast"></p>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            if (modalId === 'roofScannerModal') {
+                openCamera();
+            }
+            if (modalId === 'weatherForecastModal') {
+                initWeatherMap();
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function openCamera() {
+            const video = document.getElementById('cameraStream');
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => video.srcObject = stream)
+                .catch(error => console.error("Error accessing camera:", error));
+        }
+
+        function takeSnapshot() {
+            const video = document.getElementById('cameraStream');
+            const canvas = document.getElementById('snapshotCanvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.style.display = 'block';
+            alert('Snapshot taken! Check console for the image data.');
+            console.log(canvas.toDataURL());
+        }
+
+        function calculateROI() {
+            const investment = parseFloat(document.getElementById('investment').value);
+            const savings = parseFloat(document.getElementById('savings').value);
+            const years = parseFloat(document.getElementById('years').value);
+            const roi = (savings * years - investment) / investment * 100;
+            document.getElementById('roi-result').textContent = `ROI: ${roi.toFixed(2)}%`;
+        }
+
+        function initWeatherMap() {
+            const map = L.map('weather-map').setView([51.505, -0.09], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+            getWeatherData();
+        }
+
+        function getWeatherData() {
+            // Sample weather data for demonstration purposes
+            const weatherData = {
+                temperature: 22,
+                condition: 'Sunny',
+                wind: 5
+            };
+            document.getElementById('weather-info').textContent = 
+                `Temperature: ${weatherData.temperature}°C, Condition: ${weatherData.condition}, Wind Speed: ${weatherData.wind} km/h`;
+        }
+
+        function calculateLoan() {
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value) / 100;
+            const loanTerm = parseFloat(document.getElementById('loanTerm').value);
+            const monthlyPayment = (loanAmount * interestRate / 12) / (1 - Math.pow(1 + interestRate / 12, -loanTerm * 12));
+            document.getElementById('loan-result').textContent = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
+        }
+
+        function generateForecast() {
+            const forecastData = "Estimated Savings: $500/year for the first 5 years.";
+            document.getElementById('savings-forecast').textContent = forecastData;
+        }
+    </script>
+</body>
+</html>

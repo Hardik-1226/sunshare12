@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunShare - Empower Your Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('solar.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            overflow: hidden;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .hero-section {
+            height: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: left;
+            flex-direction: column;
+            padding-left: 50px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333333;
+            font-weight: 500;
+            margin-bottom: 40px;
+            font-family: 'Times New Roman', serif;
+            position: relative;
+            top: 50px;
+        }
+
+        h2 {
+            font-size: 80px;
+            font-weight: bold;
+            color: #00E676;
+            font-family: 'Arial Black', sans-serif;
+            margin-bottom: 10px;
+            text-align: left;
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            margin-right: auto;
+            margin-top: 10%;
+        }
+
+        p {
+            font-size: 24px;
+            color: whitesmoke;
+            font-family: 'Arial', sans-serif;
+            text-align: left;
+            display: block;
+            margin-right: auto;
+            margin-top: 0%;
+        }
+
+        .bottom-section {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 40px;
+            background-color: #00E676;
+            color: #fff;
+            font-size: 20px;
+            font-family: 'Arial Black', sans-serif;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #00C853;
+        }
+
+        .about-btn {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            padding: 10px 20px;
+            background-color: #00E676;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .about-btn:hover {
+            background-color: #00C853;
+        }
+
+        .arrow-down {
+            margin-top: 15px;
+        }
+
+        .arrow-down img {
+            width: 50px;
+            height: 50px;
+            animation: smoothBounce 2.5s infinite ease-in-out;
+        }
+
+        @keyframes smoothBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(15px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span>EagleBitz🦅</span>
+        </div>
+    </header>
+    <main>
+        <div class="hero-section">
+            <h1>Empower Your Community with Solar</h1>
+            <h2>SunShare</h2>
+            <p>Empower Your Community with Solar</p>
+        </div>
+        <a href="about.html" class="about-btn">About</a>
+        <div class="bottom-section">
+            <a href="1page.html" class="btn">Get Started</a>
+            <div class="arrow-down">
+                <img src="2-21379_this-free-clip-arts-design-of-green-down-arrow-green-arrow-down.png" alt="Arrow Down">
+            </div>
+        </div>
+    </main>
+</body>
+</html>

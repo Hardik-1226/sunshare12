@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invest in Solar Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: url('solar.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 20px 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1, h2 {
+            margin-top: 30px;
+            font-size: 2.5rem;
+            color: #f5c032;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .button-container {
+            margin: 30px auto;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background-color: #1e7e34;
+        }
+
+        .invest-section, .carbon-section, .transaction-section, .shares-section {
+            padding: 50px 20px;
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 280px;
+            text-align: left;
+            color: #fff;
+            animation: fadeInUp 1s ease;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #ffc107;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Invest in Solar Projects</h1>
+    </header>
+    <div class="button-container">
+        <button onclick="buyShares()">Buy Shares</button>
+        <button onclick="sellShares()">Sell Shares</button>
+        <button onclick="tradeCarbon()">Trade Carbon Credits</button>
+        <button onclick="trackShares()">Track Shares</button>
+    </div>
+    <h2>Available Solar Projects</h2>
+    <div class="invest-section">
+        <div class="card">
+            <h3>Project A - Rooftop Solar</h3>
+            <p>Invest in rooftop solar panels for a projected ROI of 7%. Help urban areas reduce their carbon footprint.</p>
+            <button onclick="investInProject('Project A')">Invest Now</button>
+        </div>
+        <div class="card">
+            <h3>Project B - Solar Farm</h3>
+            <p>Join a community solar farm with a projected 9% ROI. Perfect for rural areas looking to go green.</p>
+            <button onclick="investInProject('Project B')">Invest Now</button>
+        </div>
+        <div class="card">
+            <h3>Project C - Commercial Solar</h3>
+            <p>Invest in solar installations for businesses and receive a 10% ROI. Contribute to reducing corporate carbon emissions.</p>
+            <button onclick="investInProject('Project C')">Invest Now</button>
+        </div>
+    </div>
+    <h2>Your Carbon Credits</h2>
+    <div class="carbon-section">
+        <div class="card">
+            <h3>Earned Carbon Credits</h3>
+            <p>You have earned <strong>1500 Carbon Credits</strong> through your investments in solar projects.</p>
+        </div>
+        <div class="card">
+            <h3>Traded Carbon Credits</h3>
+            <p>You have traded <strong>500 Carbon Credits</strong>. Your net balance is <strong>1000 Carbon Credits</strong>.</p>
+        </div>
+    </div>
+    <h2>Transaction History</h2>
+    <div class="transaction-section">
+        <div class="card">
+            <h3>Investment in Project A</h3>
+            <p>Date: 01/05/2024</p>
+            <p>Amount: $500</p>
+            <p>Status: Completed</p>
+        </div>
+        <div class="card">
+            <h3>Sale of Project B Shares</h3>
+            <p>Date: 15/06/2024</p>
+            <p>Amount: $700</p>
+            <p>Status: Completed</p>
+        </div>
+        <div class="card">
+            <h3>Purchase of Carbon Credits</h3>
+            <p>Date: 30/07/2024</p>
+            <p>Amount: 200 Credits</p>
+            <p>Status: Completed</p>
+        </div>
+    </div>
+    <h2>Track Your Shares</h2>
+    <div class="shares-section">
+        <div class="card">
+            <h3>Project A - Performance</h3>
+            <div class="chart-container">
+                <canvas id="projectAChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Project B - Performance</h3>
+            <div class="chart-container">
+                <canvas id="projectBChart"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Project C - Performance</h3>
+            <div class="chart-container">
+                <canvas id="projectCChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        function buyShares() {
+            alert('Proceed to buy shares in solar projects.');
+        }
+        function sellShares() {
+            alert('Sell your solar project shares.');
+        }
+        function tradeCarbon() {
+            alert('Trade carbon credits now.');
+        }
+        function trackShares() {
+            alert('You can now track the performance of your shares.');
+        }
+        function investInProject(projectName) {
+            alert(`You have chosen to invest in ${projectName}.`);
+        }
+        var ctxA = document.getElementById('projectAChart').getContext('2d');
+        var projectAChart = new Chart(ctxA, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                datasets: [{
+                    label: 'Profit/Loss',
+                    data: [5, 10, -3, 7, 9, 2, -5, 12, 15],
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        var ctxB = document.getElementById('projectBChart').getContext('2d');
+        var projectBChart = new Chart(ctxB, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                datasets: [{
+                    label: 'Profit/Loss',
+                    data: [3, -5, 12, 8, 9, -3, 10, 7, 6],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        var ctxC = document.getElementById('projectCChart').getContext('2d');
+        var projectCChart = new Chart(ctxC, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                datasets: [{
+                    label: 'Profit/Loss',
+                    data: [10, 12, -2, 5, 8, -7, 3, 15, 18],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
